@@ -1,21 +1,33 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import userRouter from '@/modules/users/router'
+import authRouter from '@/modules/auth/router'
+import adminRouter from '@/modules/admin/router'
+import {isAuthenticatedGuard, validateAuth} from "@/modules/auth/router/auth-guard";
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    redirect: "/auth",
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path:'/auth',
+    beforeEnter: [ validateAuth ],
+    ...authRouter
   },
+  {
+    path:'/admin',
+    beforeEnter: [ isAuthenticatedGuard ],
+    ...adminRouter
+  },
+  {
+    path:'/user',
+    //beforeEnter: [ isAuthenticatedGuard ],
+    ...userRouter
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/auth'
+},
 ];
 
 const router = createRouter({
