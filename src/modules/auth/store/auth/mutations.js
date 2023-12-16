@@ -25,6 +25,10 @@ export const loginUser = (state, { token, username }) => {
         state.username = username
     }
     state.status = 'authenticated'
+    const claims = window.atob(token.split(".")[1])
+    const tokenPayload = JSON.parse(claims)
+    state.isAdmin = tokenPayload.isAdmin
+    state.authorities = tokenPayload.authorities
 }
 
 export const logout = (state) => {

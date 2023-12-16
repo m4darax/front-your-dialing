@@ -11,3 +11,7 @@ export const saveFullTimeMoreSecond = (state) => {
 
     state.timefull = originalDate
 }
+
+export const saveDialing = (state, dataDialing) => {
+    state.dialing = dataDialing;
+}

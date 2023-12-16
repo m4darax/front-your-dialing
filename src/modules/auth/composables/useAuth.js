@@ -17,7 +17,12 @@ export const useAuth = () => {
     const getLogin = async () => {
         const resp = await store.dispatch('auth/getToken', dataForm.value)
         if ( resp.ok ) {
-          router.push({name: 'admin-users'})
+
+          if ( store.state.auth.isAdmin ) {
+            router.push({name: 'admin-users'})
+          } else {
+            router.push({name: 'users'})
+          }
         } else {
           visible.value = true;
         }

@@ -7,3 +7,7 @@ export const hourTime = ( state ) => {
         ss: date.getSeconds(),
     }
 }
+
+export const getDialing = ( state ) => {
+    return state.dialing
+}

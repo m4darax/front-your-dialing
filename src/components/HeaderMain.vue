@@ -5,8 +5,8 @@
     </div>
     <div class="header-avatar">
       <Avatar label="P" class="mr-1" size="large" />
-      <div @click="toggle">Clever Rivera
-        <TieredMenu ref="menu" id="overlay_tmenu" :model="listItemAvatar" @item-click="handleItemClick" popup />
+      <div @click="toggle">{{$store.state.auth.username}}
+        <TieredMenu ref="menu" id="overlay_tmenu" :model="listItemAvatar" @item-click="handleTabClick" popup />
       </div>
     </div>
   </div>

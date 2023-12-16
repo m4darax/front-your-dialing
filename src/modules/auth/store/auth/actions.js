@@ -3,11 +3,6 @@
 import { apiDialing } from "@/api/apiDialing"
 
 export const getToken = async ( { commit }, dataForm) => {
-    let data = {
-        data: '',
-        error: ''
-    }
-
     try {
         const resp = await apiDialing.post('/login', dataForm)
         const { token, username } = resp.data

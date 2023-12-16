@@ -1,5 +1,4 @@
 export default {
-    //path: '/user',
     name: 'admin',
     component: () => import(/**/ '@/modules/admin/layouts/AdminLayout'),
     children: [
