@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue';
+
 export default {
     //path: '/user',
     name: 'user',
@@ -6,7 +8,7 @@ export default {
         {
             path: '',
             name: 'users',
-            component: () =>  import('@/modules/users/components/TimeHours')
+            component: defineAsyncComponent(/* webpackChunkName: "timeHours" */ () =>  import('@/modules/users/components/TimeHours'))
         }
     ]
 }

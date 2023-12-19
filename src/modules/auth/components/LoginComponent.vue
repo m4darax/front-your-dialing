@@ -6,7 +6,7 @@
                 <label for="username">Username</label>
                 <InputText id="username" v-model="dataForm.username" aria-describedby="username-help" />
             </div>
-            <div class="flex flex-column gap-2 pr-4 pl-4 flex-grow-1">
+            <div class="flex flex-column gap-2 pr-4 pt-2 pl-4 flex-grow-1">
                 <label for="password">Password</label>
                 <Password id="password" :feedback="true" toggleMask v-model="dataForm.password"
                     aria-describedby="password-help" autoComplete="current-password" />
@@ -24,7 +24,6 @@
             </p>
         </Dialog>
         <br>
-        <small id="password-help"><router-link :to="{ name: 'register' }">Create Account</router-link></small>
     </div>
 </template>
 <script>

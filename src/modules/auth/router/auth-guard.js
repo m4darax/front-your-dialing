@@ -33,7 +33,7 @@ export const isAuthenticatedGuard = async (to, from, next) => {
 export const isAuthenticatedUser = async(to, from, next) => {
     const store = useStore();
     const { idToken, username, isAdmin } = store.state.auth;
-    if (idToken, username, !isAdmin) {
+    if (idToken && username && !isAdmin) {
         next()
     } else if ( idToken && username && isAdmin) {
         next()
