@@ -83,7 +83,7 @@ git clone https://github.com/m4darax/front-your-dialing.git
 cd yourdialing
 
 # 2. Instala las Dependencias
-npm install -> Es importante ejecutar dicho comando dentro del proyecto
+npm install
 
 # 3. Verifica la Versión de Node.js y npm
 node -v
