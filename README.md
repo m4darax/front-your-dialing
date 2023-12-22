@@ -42,11 +42,19 @@ Bienvenido al Sistema de Marcaciones YourDialing, una aplicación web diseñada 
 
 ## Capturas de Pantalla
 
+
 ![Detalles de Usuarios](/images/detalles_usuarios.png)
+
+## Detalles de Usuarios
 
 ![Login](/images/login.png)
 
+## Login
+
 ![Vista de Marcaciones](/images/vista_marcaciones.png)
+
+## Vista de Marcaciones
 
 ![Vista de Registros](/images/detalles_registros.png)
 
+## Vista de Registros
