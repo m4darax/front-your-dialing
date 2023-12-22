@@ -40,3 +40,13 @@ Bienvenido al Sistema de Marcaciones YourDialing, una aplicación web diseñada 
 - **Acceso Remoto:**
   - Acceso a la información desde cualquier lugar con conexión a Internet.
 
+## Capturas de Pantalla
+
+![Detalles de Usuarios](/images/detalles_usuarios.png)
+Formato: ![Alt Text](URL de la Imagen)
+
+![Login](/images/login.png)
+Formato: ![Alt Text](URL de la Imagen)
+
+![Vista de Marcaciones](/images/vista_marcaciones.png)
+Formato: ![Alt Text](URL de la Imagen)
