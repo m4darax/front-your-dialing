@@ -79,7 +79,7 @@ Sigue estos pasos para instalar y ejecutar YourDialing:
 
 ```bash
 # 1. Clona el Repositorio
-git clone https://github.com/tuusuario/yourdialing.git
+git clone [Repositorio](https://github.com/m4darax/front-your-dialing.git)
 cd yourdialing
 
 # 2. Instala las Dependencias
