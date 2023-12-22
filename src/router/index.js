@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import userRouter from '@/modules/users/router'
 import authRouter from '@/modules/auth/router'
 import adminRouter from '@/modules/admin/router'
-import {isAuthenticatedGuard, validateAuth, isAuthenticatedUser} from "@/modules/auth/router/auth-guard";
+import {isAuthenticatedGuardAdmin, validateAuth, isAuthenticatedUser} from "@/modules/auth/router/auth-guard";
 
 const routes = [
   {
@@ -16,7 +16,7 @@ const routes = [
   },
   {
     path:'/admin',
-    beforeEnter: [ isAuthenticatedGuard ],
+    beforeEnter: [ isAuthenticatedGuardAdmin ],
     ...adminRouter
   },
   {

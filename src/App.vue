@@ -9,9 +9,11 @@ import { useAuth } from './modules/auth/composables/useAuth';
 export default {
   name: "App",
   setup() {
-    
+
     const { checkAuthStatus } = useAuth()
-    checkAuthStatus();
+
+    checkAuthStatus()
+
     return {}
   }
 };
@@ -25,10 +27,10 @@ export default {
   border: none;
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-
 </style>

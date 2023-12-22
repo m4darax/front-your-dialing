@@ -1,7 +1,7 @@
 <template lang="">
     <nav>
     <div class="flex flex-column gap-3">
-      <HeaderMain />
+      <HeaderMain :headers="headers" />
     </div>
   </nav>
   <div class="flex justify-content-center">
@@ -16,7 +16,16 @@ import HeaderMain from '@/components/HeaderMain.vue';
 
 export default {
   name: 'UserLayout',
-  components: { HeaderMain }
+  components: { HeaderMain },
+  setup() {
+    const headers = [
+      { label: "Marcar", icon: "pi pi-list", id: 'users' },
+    ]
+
+    return {
+      headers
+    }
+  }
   
 }
 </script>
@@ -26,4 +35,5 @@ export default {
   max-width: 50%;
   max-height: 50%;
 }
+
 </style>

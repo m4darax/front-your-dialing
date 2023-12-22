@@ -24,7 +24,6 @@
             </div>
             <div class="flex flex-column gap-2">
                 <label for="email">Identification</label>
-                <!-- <InputNumber v-model="userForm.identificacion" class="p-invalid" mode="decimal" :minFractionDigits="2" /> -->
                 <InputNumber :useGrouping="false" v-model="userForm.identificacion"   />
             </div>
         </div>

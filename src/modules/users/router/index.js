@@ -8,7 +8,7 @@ export default {
         {
             path: '',
             name: 'users',
-            component: defineAsyncComponent(/* webpackChunkName: "timeHours" */ () =>  import('@/modules/users/components/TimeHours'))
+            component: () =>  import('@/modules/users/components/TimeHours')
         }
     ]
 }

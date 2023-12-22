@@ -13,7 +13,8 @@ const useAdmin = () => {
     email: '',
     lastName: '',
     identification: null,
-    checkIsAdmin: []
+    checkIsAdmin: [],
+    password: ''
   })
   const messageFetch = ref('')
   const errorMessage = ref(false)

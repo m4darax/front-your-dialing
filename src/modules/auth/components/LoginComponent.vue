@@ -8,7 +8,7 @@
             </div>
             <div class="flex flex-column gap-2 pr-4 pt-2 pl-4 flex-grow-1">
                 <label for="password">Password</label>
-                <Password id="password" :feedback="true" toggleMask v-model="dataForm.password"
+                <Password id="password" :feedback="false" toggleMask v-model="dataForm.password"
                     aria-describedby="password-help" autoComplete="current-password" />
 
             </div>
@@ -16,7 +16,7 @@
             
         </div>
         <div class="flex justify-content-center">
-            <Button @click="getLogin" label="Submit" class="mt-2" />
+            <Button @click="getLogin" label="Ingresar" class="mt-2" />
         </div>
         <Dialog v-model:visible="visible" modal header="Login" :style="{ width: '15rem' }" :breakpoints="{ '500px': '75vw', '575px': '90vw' }">
             <p>

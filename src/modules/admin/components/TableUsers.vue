@@ -14,7 +14,7 @@
                 </template>
             </Toolbar>
 
-            <DataTable ref="dt" :value="user" v-model:selection="selectedProducts" dataKey="idUsername" 
+            <DataTable ref="dt" v-model:filters="filters" :value="user" stripedRows v-model:selection="selectedProducts" dataKey="idUsername" 
                 :paginator="true" :rows="10" 
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products">
@@ -23,19 +23,22 @@
                         <h4 class="m-0">Users</h4>
 						<span class="p-input-icon-left">
                             <i class="pi pi-search" />
-                            <InputText  placeholder="Search..." />
+                            <InputText v-model="filters['global'].value"  placeholder="Search..." />
                         </span>
 					</div>
                 </template>
-
                 <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
-                <Column field="idUsername" header="Id" sortable style="min-width:5rem"></Column>
+                <Column field="enabled" header="Status" sortable style="min-width:7rem">
+                    <template #body="slotProps">
+                        <Tag :value="getStatusValue(slotProps.data.enabled)" :severity="getStatusLabel(slotProps.data.enabled)" />
+                    </template>
+                </Column>
                 <Column field="username" header="Username" sortable style="min-width:10rem"></Column>
                 <Column field="name" header="Name" sortable style="min-width:10rem"></Column>
                 <Column field="lastName" header="Last Name" sortable style="min-width:10rem"></Column>
                 <Column field="email" header="Email" sortable style="min-width:13rem"></Column>
                 <Column field="identification" header="Identification" sortable style="min-width:10rem"></Column>
-                  
+                
                 <Column :exportable="false" style="min-width:8rem">
                     <template #body="slotProps">
                         <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)" />
@@ -47,6 +50,10 @@
 
         <Dialog v-model:visible="productDialog" :style="{width: '450px'}" header="Product Details" :modal="true" class="p-fluid">
             <div class="field">
+                <label for="name">Estado del Usuario</label>
+                <SelectButton  v-model.trim="product.enabled" :options="options" aria-labelledby="basic" />
+            </div>
+            <div class="field">
                 <label for="name">Name</label>
                 <InputText id="name" v-model.trim="product.name" required="true" autofocus :class="{'p-invalid': submitted && !product.name}" />
                 <small class="p-error" v-if="submitted && !product.name">Name is required.</small>
@@ -55,6 +62,11 @@
                 <label for="">Last Name</label>
                 <InputText id="lastname" v-model.trim="product.lastName" required="true" autofocus :class="{'p-invalid': submitted && !product.lastName}" />
                 <small class="p-error" v-if="submitted && !product.lastName">Last Name is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="">Password</label>
+                <Password id="lastname" v-model.trim="product.password" :feedback="false" toggleMask autofocus :class="{'p-invalid': submitted && !product.lastName}" />
             </div>
 
             <div class="field">
@@ -69,6 +81,7 @@
                 <small class="p-error" v-if="submitted && !product.identification">Identification is required</small>
             </div> 
             <div class="field">
+                <label for="">Roles</label>
                 <div class="flex align-items-center gap-2">
                     <Checkbox v-model="product.roles" inputId="admin" name="admin" value="admin" />
                     <label for="admin" class="ml-2"> Admin </label>
@@ -111,7 +124,7 @@
 <script>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { apiDialing } from '@/api/apiDialing';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
@@ -119,12 +132,17 @@ import Toolbar from 'primevue/toolbar';
 import Dialog from 'primevue/dialog';
 import useAdmin from '@/modules/admin/composables/useAdmin'
 import Checkbox from 'primevue/checkbox';
+import Password from 'primevue/password';
+import Tag from 'primevue/tag';
+import SelectButton from 'primevue/selectbutton';
+import { FilterMatchMode } from 'primevue/api';
 
 export default {
     name: 'TableUsers',
-    components: { DataTable, Column, InputNumber, InputText, Toolbar, Dialog, Checkbox },
+    components: { DataTable, Column, InputNumber, InputText, Toolbar, Dialog, Checkbox, Password, Tag, SelectButton },
     setup() {
         const user = ref([])
+        const options = ref(['Activo', 'Inactivo']);
 
         const listUser = async () => {
             const resp = await apiDialing.get('/user')
@@ -155,9 +173,9 @@ export default {
             submitted.value = false;
         };
         const saveProduct = async () => {
-            console.log(product.value);
             if (product.value.name.trim() && product.value.lastName.trim() && product.value.email.trim() && product.value.identification) {
                 if (product.value.idUsername) {
+                    product.value.enabled = product.value.enabled == 'Activo' ? true : false
                     await editUser(product.value)
                     listUser()
                 }
@@ -169,6 +187,7 @@ export default {
         const editProduct = (prod) => {
             product.value = { ...prod };
             product.value.roles = prod.roles.map(e => e.name.slice(5).toLowerCase())
+            product.value.enabled = prod.enabled ? 'Activo' : 'Inactivo'
             productDialog.value = true;
         };
         const confirmDeleteProduct = (prod) => {
@@ -182,18 +201,36 @@ export default {
             listUser()
         };
 
-        // const confirmDeleteSelected = () => {
-        //     deleteProductsDialog.value = true;
-        // };
+        const getStatusLabel = (status) => {
+            switch (status) {
+                case true:
+                    return 'Activo';
+                case false:
+                    return 'Inactivo';
+                default:
+                    return null;
+            }
+        };
 
-        // const deleteSelectedProducts = () => {
-        //     products.value = products.value.filter(val => !selectedProducts.value.includes(val));
-        //     deleteProductsDialog.value = false;
-        //     selectedProducts.value = null;
-        // };
+        const filters = ref(
+            {
+                global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+            }
+        );
+        const getStatusValue = (status) => {
+            switch (status) {
+                case true:
+                    return 'Activo';
+                case false:
+                    return 'Inactivo';
+                default:
+                    return null;
+            }
+        };
 
 
         return {
+            filters,
             user,
             editProduct,
             product,
@@ -205,7 +242,10 @@ export default {
             confirmDeleteProduct,
             deleteProductDialog,
             deleteProductsDialog,
-            deleteProduct
+            deleteProduct,
+            getStatusLabel,
+            getStatusValue,
+            options
         }
     }
 }

@@ -93,12 +93,15 @@ export default {
             validateCheckDisabled(dialing)
         });
 
-        onBeforeMount(() => {
+        setInterval(() => {
+            console.log("repite");
+            moreSecondTimeFull();
+        }, 1000);
+
+
+        onBeforeMount(async () => {
             getTimeHour()
             useConsumeApiSaveRecord()
-            setInterval(() => {
-                moreSecondTimeFull();
-            }, 1000);
         })
 
         return {

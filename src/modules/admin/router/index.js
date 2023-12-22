@@ -11,6 +11,17 @@ export default {
             path: '',
             name: 'admin-list-users',
             component: () =>  import('@/modules/admin/components/TableUsers')
+        },
+        {
+            path: '',
+            name: 'dialing-users',
+            component: () =>  import('@/modules/users/components/TimeHours.vue')
+        },
+        {
+            path: '',
+            name: 'admin-records',
+            component: () =>  import('@/modules/admin/views/DetailsRecords.vue')
         }
+        
     ]
 }

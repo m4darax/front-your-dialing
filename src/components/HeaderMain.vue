@@ -4,7 +4,7 @@
         <TabMenu :model="items" @tab-change="handleTabClick" />
     </div>
     <div class="header-avatar">
-      <Avatar label="P" class="mr-1" size="large" />
+      <Avatar :label="$store.state.auth.username.charAt(0).toUpperCase()" class="mr-1" size="large" />
       <div @click="toggle">{{$store.state.auth.username}}
         <TieredMenu ref="menu" id="overlay_tmenu" :model="listItemAvatar" @item-click="handleTabClick" popup />
       </div>
@@ -21,19 +21,21 @@ import { useStore } from "vuex";
 
 export default {
   name: "HeaderMain",
+  props:{
+    headers: {
+      type: null,
+      required: true
+    }
+  },
   components: { TabMenu, Avatar, TieredMenu },
-  setup() {
+  setup(props) {
     const store = useStore()
 
-    const items = ref([
-      { label: "Crear Usuario", icon: "pi pi-home", id: 'admin-users' },
-      { label: "Usuarios", icon: "pi pi-chart-line", id: 'admin-list-users' },
-      { label: "Permisos", icon: "pi pi-list", id: 'admin-users' },
-    ]);
+    const items = ref(props.headers);
     const menu = ref();
     const listItemAvatar = ref([
       {
-        label: 'Logout',
+        label: 'Cerrar Session',
         id: 'logout',
         icon: 'pi pi-search',
         command: () => {
@@ -42,11 +44,7 @@ export default {
       },
       {
         separator: true
-      },
-      {
-        label: 'Search',
-        icon: 'pi pi-search'
-      },
+      }
     ]);
 
     const router = useRouter()

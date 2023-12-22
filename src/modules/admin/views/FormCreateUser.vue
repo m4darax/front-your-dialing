@@ -29,9 +29,11 @@
             </div>
 
             <div class="flex align-items-center">
-                <div class="flex align-items-center">
+                <div class="flex align-items-center gap-2">
                     <Checkbox v-model="userForm.checkIsAdmin" inputId="admin" name="admin" value="admin" />
                     <label for="admin" class="ml-2"> Admin </label>
+                    <Checkbox v-model="userForm.checkIsAdmin" inputId="admin" name="admin" value="user" />
+                    <label for="admin" class="ml-2"> User </label>
                 </div>
             </div>
         </div>

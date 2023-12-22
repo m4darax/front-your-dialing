@@ -33,3 +33,14 @@ export const fetchDeleteUser = async ({commit}, userForm) => {
         return {ok: false, message: error.response.data.errors}
     }
 }
+
+export const fetchRecords = async ({commit}) => {
+
+    try {
+        const resp = await apiDialing.get('/save-record');
+        commit('setRecords', resp.data.data.data)
+        return {ok: true, message: ''}
+    } catch (error) {
+        return {ok: false, message: error.response.data.errors}
+    }
+}

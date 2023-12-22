@@ -36,6 +36,5 @@ export const logout = (state) => {
     state.idToken = ''
     localStorage.removeItem('username')
     state.username = ''
-    state.status = 'authenticated'
     state.status = 'not-authenticated'
 }
