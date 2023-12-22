@@ -8,6 +8,16 @@ export const hourTime = ( state ) => {
     }
 }
 
+export const dateTime = ( state ) => {
+    const date = new Date(state.timefull)
+    console.log(date);
+    return {
+        mm:date.getMonth() + 1,
+        yy:date.getFullYear(),
+        dd:date.getDate(),
+    }
+}
+
 export const getDialing = ( state ) => {
     return state.dialing
 }

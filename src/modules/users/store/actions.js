@@ -13,7 +13,7 @@ export const getTimeHour = async ({commit}, userForm) => {
     }
 }
 
-export const saveFullTimeMoreSecond = async({commit}) => {
+export const saveFullTimeMoreSecond = ({commit}) => {
     commit('saveFullTimeMoreSecond')
 }
 

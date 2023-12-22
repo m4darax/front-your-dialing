@@ -2,9 +2,9 @@
     <div>
         <div id="app" class="date-time-container">
             <div class="flex pt-3">
-                <div class="date-time-item" id="year">Año: 2023 </div>
-                <div class="date-time-item" id="day">Día: 20 </div>
-                <div class="date-time-item" id="month">Mes: {{ someValue.hh }} </div>
+                <div class="date-time-item" id="year">Año: {{ dateTime.yy }} </div>
+                <div class="date-time-item" id="day">Día: {{ dateTime.dd }} </div>
+                <div class="date-time-item" id="month">Mes: {{ dateTime.mm }} </div>
             </div>
             <div class="flex pt-3">
                 <div class="date-time-item" id="hour">Hora: {{ someValue.hh }} </div>
@@ -65,7 +65,7 @@
 
 import InputSwitch from 'primevue/inputswitch';
 import useUsers from '@/modules/users/composables/useUsers'
-import { computed, onBeforeMount, onBeforeUpdate, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUnmounted, onUpdated, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -76,6 +76,7 @@ export default {
 
         const someValue = computed(() => store.getters['user/hourTime']);
         const dialing = computed(() => store.getters['user/getDialing']);
+        const dateTime = computed(() => store.getters['user/dateTime']);
 
         const {
             fetchSaveRecord,
@@ -93,16 +94,24 @@ export default {
             validateCheckDisabled(dialing)
         });
 
-        setInterval(() => {
-            console.log("repite");
-            moreSecondTimeFull();
-        }, 1000);
-
-
         onBeforeMount(async () => {
             getTimeHour()
             useConsumeApiSaveRecord()
+            startInterval()
         })
+
+
+        const startInterval = () => {
+            // Guardar el identificador del intervalo para detenerlo más tarde
+            const intervalId = setInterval(() => {
+                moreSecondTimeFull();
+            }, 1000);
+
+            // Limpiar el intervalo cuando el componente se desmonta
+            onUnmounted(() => {
+                clearInterval(intervalId);
+            });
+        };
 
         return {
             someValue,
@@ -110,7 +119,8 @@ export default {
             dialing,
             checkDialing,
             checkDiabled,
-            fetchSaveRecord
+            fetchSaveRecord,
+            dateTime
         }
     }
 
